@@ -5,7 +5,7 @@ A magical animated Christmas scene for React. One component gives you waving nor
 ![christmas-aurora demo](./docs/demo.gif)
 
 - **One import, no setup.** Styles are bundled with the component; there is no CSS file to import.
-- **Self-contained.** No dependencies beyond React and nothing to host: the illustrations are embedded in the bundle (about 390 kB gzipped).
+- **Self-contained.** No dependencies beyond React and nothing to host: the illustrations are embedded in the bundle (about 460 kB gzipped).
 - **Smooth.** Canvas for the aurora and snow, SVG and CSS transforms for everything else. Animation stops when the scene is off screen or the tab is hidden.
 - **Considerate.** Respects `prefers-reduced-motion`, never autoplays audio, and cleans up every loop, timer and listener on unmount.
 - **Typed.** Written in TypeScript, ships ESM and CommonJS builds, and works with server rendering.

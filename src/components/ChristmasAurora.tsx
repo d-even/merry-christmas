@@ -9,7 +9,7 @@ import { ChristmasTree } from './ChristmasTree';
 import { Greeting } from './Greeting';
 import { Hut } from './Hut';
 import { Moon } from './Moon';
-import { FramingPines, Ground, Mountains } from './Landscape';
+import { FramingPines, Mountains } from './Landscape';
 import { Santa } from './Santa';
 import { Snowfall } from './Snowfall';
 import { Snowman } from './Snowman';
@@ -141,7 +141,6 @@ export const ChristmasAurora = forwardRef<HTMLDivElement, ChristmasAuroraProps>(
             <Santa active={active} speed={safeSpeed} onSpeak={audio.jingle} />
           ) : null}
           <Mountains />
-          <Ground auroraGlow={aurora} />
           <FramingPines />
           {hut ? <Hut /> : null}
           {christmasTree ? <ChristmasTree /> : null}

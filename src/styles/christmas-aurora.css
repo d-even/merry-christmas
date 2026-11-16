@@ -161,25 +161,15 @@
 
 /* ---------- landscape ---------- */
 
-/* Fixed scale (27 units tall); the artwork extends past the viewBox to cover wide containers. */
-.ca-scene svg.ca-mountains {
+/* Fixed scale, bottom-anchored and centred; it only grows when the container is wider than the picture. */
+.ca-mountains {
   position: absolute;
   left: 50%;
-  bottom: calc(var(--ca-u) * 11);
-  width: max(100%, calc(var(--ca-u) * 102.86));
-  height: calc(var(--ca-u) * 27);
-  transform: translateX(-50%);
-}
-
-.ca-scene svg.ca-ground {
-  position: absolute;
-  left: 0;
   bottom: 0;
-  height: calc(var(--ca-u) * 16.5);
-}
-
-.ca-ground-glow {
-  animation: ca-ground-glow calc(9s / var(--ca-speed)) ease-in-out infinite alternate;
+  width: max(100%, calc(var(--ca-u) * 150));
+  max-width: none;
+  height: auto;
+  transform: translateX(-50%);
 }
 
 .ca-pine,
@@ -188,31 +178,6 @@
 .ca-snowman {
   position: absolute;
   transform: translateX(-50%);
-}
-
-.ca-pine--far-a {
-  left: 9%;
-  bottom: calc(var(--ca-u) * 12.6);
-  width: calc(var(--ca-u) * 4.6);
-  opacity: 0.9;
-}
-
-.ca-pine--far-b {
-  left: 15%;
-  bottom: calc(var(--ca-u) * 12.2);
-  width: calc(var(--ca-u) * 6.2);
-}
-
-.ca-pine--far-c {
-  left: 70%;
-  bottom: calc(var(--ca-u) * 12.3);
-  width: calc(var(--ca-u) * 5.4);
-}
-
-.ca-pine--right-back {
-  left: 91%;
-  bottom: calc(var(--ca-u) * 8);
-  width: calc(var(--ca-u) * 13);
 }
 
 .ca-pine--right {
@@ -549,11 +514,6 @@
 @keyframes ca-pulse {
   from { opacity: 0.75; scale: 0.94; }
   to { opacity: 1; scale: 1.08; }
-}
-
-@keyframes ca-ground-glow {
-  from { opacity: 0.45; }
-  to { opacity: 1; }
 }
 
 @keyframes ca-flicker {
