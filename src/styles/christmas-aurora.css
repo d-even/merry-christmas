@@ -1,0 +1,736 @@
+/* christmas-aurora — every selector is prefixed with "ca" so nothing leaks into the host page. */
+
+.ca {
+  /* Scene unit. Replaced with an exact pixel value at runtime; this is the pre-hydration fallback. */
+  --ca-u: min(calc(100vw / 58), calc(100vh / 56));
+  --ca-speed: 1;
+  --ca-font-title: 'Great Vibes', 'Snell Roundhand', 'Segoe Script', 'Brush Script MT', 'Apple Chancery', cursive;
+  --ca-font-body: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --ca-text: #fff6df;
+  --ca-sky: linear-gradient(180deg, #060a22 0%, #0b1240 30%, #1a1f66 58%, #3b2c84 80%, #6a4a9c 100%);
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  isolation: isolate;
+  contain: layout paint;
+  background: var(--ca-sky);
+  color: var(--ca-text);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ca,
+.ca *,
+.ca *::before,
+.ca *::after {
+  box-sizing: border-box;
+}
+
+.ca--midnight {
+  --ca-sky: linear-gradient(180deg, #02030d 0%, #050925 34%, #0b1244 62%, #181a5c 84%, #2a2470 100%);
+}
+
+.ca--dusk {
+  --ca-sky: linear-gradient(180deg, #0d0f33 0%, #23195e 30%, #4a2a80 54%, #8a4490 74%, #d47a94 90%, #f2a48c 100%);
+}
+
+.ca--fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  z-index: var(--ca-z-index, 0);
+  pointer-events: none;
+}
+
+.ca-scene,
+.ca-scene > canvas,
+.ca-stars,
+.ca-vignette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ca-scene {
+  pointer-events: none;
+  user-select: none;
+}
+
+.ca-scene svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* ---------- sky ---------- */
+
+.ca-scene svg.ca-stars {
+  height: 100%;
+}
+
+.ca-star {
+  fill: #fff;
+}
+
+.ca-star--twinkle {
+  animation: ca-twinkle-star 4s ease-in-out infinite;
+}
+
+.ca-shooting-star {
+  position: absolute;
+  top: 12%;
+  left: 58%;
+  width: calc(var(--ca-u) * 9);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0));
+  opacity: 0;
+  transform: rotate(-24deg) translateX(0);
+  animation: ca-shoot calc(17s / var(--ca-speed)) ease-in infinite;
+  animation-delay: calc(6s / var(--ca-speed));
+}
+
+.ca-scene > canvas.ca-aurora {
+  height: 74%;
+  filter: blur(calc(var(--ca-u) * 0.14)) saturate(1.35);
+  mix-blend-mode: screen;
+  opacity: 0.95;
+}
+
+.ca-moon {
+  position: absolute;
+  top: 9%;
+  right: 11%;
+  width: calc(var(--ca-u) * 9.5);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 66% 30%, rgba(196, 180, 128, 0.5) 0 9%, transparent 10%),
+    radial-gradient(circle at 34% 60%, rgba(196, 180, 128, 0.42) 0 13%, transparent 14%),
+    radial-gradient(circle at 62% 72%, rgba(196, 180, 128, 0.36) 0 7%, transparent 8%),
+    radial-gradient(circle at 40% 28%, rgba(196, 180, 128, 0.3) 0 5%, transparent 6%),
+    radial-gradient(circle at 38% 34%, #fffef4 0%, #fbf3d2 46%, #ecdfae 78%, #d9c98f 100%);
+  box-shadow:
+    0 0 calc(var(--ca-u) * 1.5) calc(var(--ca-u) * 0.3) rgba(255, 246, 205, 0.55),
+    0 0 calc(var(--ca-u) * 6) calc(var(--ca-u) * 2) rgba(255, 238, 185, 0.22),
+    0 0 calc(var(--ca-u) * 16) calc(var(--ca-u) * 6) rgba(190, 180, 255, 0.12);
+  animation: ca-moon-glow calc(7s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+/* ---------- Santa ---------- */
+
+.ca-santa-track {
+  position: absolute;
+  top: 11%;
+  left: 100%;
+  width: calc(100% + var(--ca-u) * 30);
+  animation: ca-fly 34s linear infinite;
+  will-change: transform;
+}
+
+.ca-santa-arc {
+  width: calc(var(--ca-u) * 30);
+  animation: ca-arc 34s linear infinite;
+}
+
+.ca-santa {
+  position: relative;
+  animation: ca-bob calc(3.2s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-santa-svg {
+  filter: drop-shadow(0 0 calc(var(--ca-u) * 0.5) rgba(255, 233, 168, 0.35));
+}
+
+.ca-reindeer {
+  animation: ca-gallop-body calc(0.72s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-leg {
+  fill: none;
+  stroke: #6f452b;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-origin: 0 0;
+  animation: ca-gallop-a calc(0.72s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-leg--b {
+  animation-name: ca-gallop-b;
+}
+
+.ca-rudolph-glow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ca-pulse calc(1.4s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-santa-wave {
+  transform-origin: 434px 74px;
+  animation: ca-wave calc(0.9s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-dust-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ca-sparkle calc(1.6s / var(--ca-speed)) ease-in-out infinite;
+}
+
+/* ---------- landscape ---------- */
+
+/* Fixed scale (27 units tall); the artwork extends past the viewBox to cover wide containers. */
+.ca-scene svg.ca-mountains {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--ca-u) * 11);
+  width: max(100%, calc(var(--ca-u) * 102.86));
+  height: calc(var(--ca-u) * 27);
+  transform: translateX(-50%);
+}
+
+.ca-scene svg.ca-ground {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: calc(var(--ca-u) * 16.5);
+}
+
+.ca-ground-glow {
+  animation: ca-ground-glow calc(9s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-pine,
+.ca-hut,
+.ca-tree,
+.ca-snowman {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.ca-pine--far-a {
+  left: 9%;
+  bottom: calc(var(--ca-u) * 12.6);
+  width: calc(var(--ca-u) * 4.6);
+  opacity: 0.9;
+}
+
+.ca-pine--far-b {
+  left: 15%;
+  bottom: calc(var(--ca-u) * 12.2);
+  width: calc(var(--ca-u) * 6.2);
+}
+
+.ca-pine--far-c {
+  left: 70%;
+  bottom: calc(var(--ca-u) * 12.3);
+  width: calc(var(--ca-u) * 5.4);
+}
+
+.ca-pine--right-back {
+  left: 91%;
+  bottom: calc(var(--ca-u) * 8);
+  width: calc(var(--ca-u) * 13);
+}
+
+.ca-pine--right {
+  left: 100%;
+  bottom: calc(var(--ca-u) * -1);
+  width: calc(var(--ca-u) * 24);
+}
+
+.ca-pine--left {
+  left: 0%;
+  bottom: calc(var(--ca-u) * -3);
+  width: calc(var(--ca-u) * 19);
+}
+
+.ca-hut {
+  left: 37%;
+  bottom: calc(var(--ca-u) * 7.6);
+  width: calc(var(--ca-u) * 25);
+}
+
+.ca-window-light {
+  animation: ca-flicker calc(4.6s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-window-glow {
+  animation: ca-flicker calc(4.6s / var(--ca-speed)) ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.ca-smoke {
+  filter: blur(2.5px);
+}
+
+.ca-smoke-puff {
+  fill: #cfd3ef;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ca-smoke calc(6.6s / var(--ca-speed)) linear infinite;
+}
+
+.ca-tree {
+  left: 60%;
+  bottom: calc(var(--ca-u) * 6.6);
+  width: calc(var(--ca-u) * 15.5);
+}
+
+.ca-twinkle circle:first-child {
+  mix-blend-mode: screen;
+}
+
+.ca-twinkle {
+  animation: ca-twinkle calc(3.4s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-tree-star {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ca-pulse calc(2.8s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-tree-halo {
+  mix-blend-mode: screen;
+}
+
+/* ---------- snowman ---------- */
+
+.ca-snowman {
+  left: 80%;
+  bottom: calc(var(--ca-u) * 4.2);
+  width: calc(var(--ca-u) * 10.5);
+}
+
+.ca-snowman-body {
+  transform-origin: 80px 208px;
+  animation: ca-sway calc(3.6s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-snowman-head {
+  transform-origin: 80px 78px;
+  animation: ca-nod calc(3.6s / var(--ca-speed)) ease-in-out infinite;
+}
+
+.ca-snowman-arm {
+  transform-origin: 106px 100px;
+  animation: ca-arm calc(1.8s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-snowman-scarf {
+  transform-origin: 90px 84px;
+  animation: ca-scarf calc(2.4s / var(--ca-speed)) ease-in-out infinite alternate;
+}
+
+.ca-snowman-shadow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ca-snowman--excited .ca-snowman-body {
+  animation: ca-jump calc(0.62s / var(--ca-speed)) cubic-bezier(0.3, 0, 0.4, 1) infinite;
+}
+
+.ca-snowman--excited .ca-snowman-shadow {
+  animation: ca-jump-shadow calc(0.62s / var(--ca-speed)) cubic-bezier(0.3, 0, 0.4, 1) infinite;
+}
+
+.ca-snowman--excited .ca-snowman-arm {
+  animation-duration: calc(0.31s / var(--ca-speed));
+}
+
+/* ---------- speech bubbles ---------- */
+
+.ca-bubble {
+  position: absolute;
+  z-index: 1;
+  padding: 0.55em 0.95em;
+  border-radius: 1.3em;
+  background: rgba(255, 255, 255, 0.97);
+  color: #1c2150;
+  font: 700 max(11px, calc(var(--ca-u) * 1.35)) / 1.2 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 0.35em 1.4em rgba(8, 10, 46, 0.4), 0 0 0 0.12em rgba(180, 200, 255, 0.35);
+  opacity: 0;
+  transform: scale(0.3) rotate(-8deg);
+  transition:
+    opacity 0.22s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ca-bubble::after {
+  content: '';
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  background: inherit;
+  border-radius: 0.15em;
+  transform: rotate(45deg);
+}
+
+.ca-bubble--visible {
+  opacity: 1;
+  transform: none;
+}
+
+.ca-bubble--snowman {
+  right: 62%;
+  bottom: 84%;
+  transform-origin: 100% 100%;
+}
+
+.ca-bubble--snowman::after {
+  right: 1.1em;
+  bottom: -0.38em;
+}
+
+.ca-bubble--santa {
+  left: 58%;
+  top: 92%;
+  transform-origin: 20% 0%;
+}
+
+.ca-bubble--santa::after {
+  left: 1.6em;
+  top: -0.38em;
+}
+
+/* ---------- foreground ---------- */
+
+.ca-scene > canvas.ca-snow {
+  z-index: 2;
+}
+
+.ca-vignette {
+  z-index: 3;
+  background:
+    radial-gradient(ellipse at 50% 42%, transparent 52%, rgba(3, 4, 22, 0.5) 100%),
+    linear-gradient(180deg, transparent 80%, rgba(10, 8, 44, 0.42) 100%);
+}
+
+.ca-greeting {
+  position: absolute;
+  z-index: 4;
+  top: 9%;
+  left: 5.5%;
+  width: min(calc(var(--ca-u) * 30), 86%);
+  text-align: center;
+  animation: ca-rise 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.ca--portrait .ca-greeting {
+  top: 20%;
+  left: 7%;
+  width: 86%;
+}
+
+.ca-title {
+  position: relative;
+  margin: 0;
+  font-family: var(--ca-font-title);
+  font-size: calc(var(--ca-u) * 7.2);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  color: var(--ca-text);
+  text-shadow:
+    0 0 calc(var(--ca-u) * 1.2) rgba(255, 214, 140, 0.45),
+    0 calc(var(--ca-u) * 0.2) calc(var(--ca-u) * 0.6) rgba(6, 8, 40, 0.6);
+  text-wrap: balance;
+}
+
+.ca-holly {
+  position: absolute;
+  top: -0.12em;
+  right: -0.02em;
+  width: 0.62em;
+  height: auto;
+  filter: drop-shadow(0 0.03em 0.06em rgba(6, 8, 40, 0.5));
+}
+
+.ca-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--ca-u) * 0.9);
+  margin: calc(var(--ca-u) * 1.3) 0 calc(var(--ca-u) * 1.1);
+  color: var(--ca-text);
+  opacity: 0.85;
+}
+
+.ca-divider span {
+  width: calc(var(--ca-u) * 6);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, currentColor);
+}
+
+.ca-divider span:last-child {
+  transform: scaleX(-1);
+}
+
+.ca-divider svg {
+  width: calc(var(--ca-u) * 1.9);
+  height: calc(var(--ca-u) * 1.9);
+  animation: ca-spin calc(24s / var(--ca-speed)) linear infinite;
+}
+
+.ca-message {
+  margin: 0 auto;
+  max-width: 17em;
+  font-family: var(--ca-font-body);
+  font-size: max(13px, calc(var(--ca-u) * 1.75));
+  line-height: 1.45;
+  color: var(--ca-text);
+  text-shadow: 0 calc(var(--ca-u) * 0.1) calc(var(--ca-u) * 0.5) rgba(6, 8, 40, 0.75);
+  text-wrap: balance;
+}
+
+.ca-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.ca--fullscreen .ca-content {
+  pointer-events: none;
+}
+
+.ca--fullscreen .ca-content > * {
+  pointer-events: auto;
+}
+
+.ca-sound {
+  position: absolute;
+  z-index: 6;
+  right: max(14px, calc(var(--ca-u) * 1.4));
+  bottom: max(14px, calc(var(--ca-u) * 1.4));
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(14, 18, 66, 0.55);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(8px);
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.ca-sound:hover {
+  background: rgba(40, 48, 130, 0.75);
+  transform: scale(1.06);
+}
+
+.ca-sound:focus-visible {
+  outline: 2px solid #ffe9a8;
+  outline-offset: 3px;
+}
+
+.ca-sound svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- keyframes ---------- */
+
+@keyframes ca-twinkle-star {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+
+@keyframes ca-shoot {
+  0%, 92% { opacity: 0; transform: rotate(-24deg) translateX(0); }
+  93% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(-24deg) translateX(calc(var(--ca-u) * -34)); }
+}
+
+@keyframes ca-moon-glow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.08); }
+}
+
+/* The track is one container-width plus one Santa wide, so -100% carries him fully across. */
+@keyframes ca-fly {
+  0% { transform: translateX(0); }
+  70%, 100% { transform: translateX(-100%); }
+}
+
+/* He swoops in low on the right, then climbs away over the top-left corner. */
+@keyframes ca-arc {
+  0% { transform: translateY(calc(var(--ca-u) * 5)) rotate(-5deg); }
+  22% { transform: translateY(calc(var(--ca-u) * 0.6)) rotate(-1deg); }
+  40% { transform: translateY(calc(var(--ca-u) * -1)) rotate(3deg); }
+  70%, 100% { transform: translateY(calc(var(--ca-u) * -13)) rotate(11deg); }
+}
+
+@keyframes ca-bob {
+  from { transform: translateY(calc(var(--ca-u) * -0.45)) rotate(-0.8deg); }
+  to { transform: translateY(calc(var(--ca-u) * 0.45)) rotate(0.8deg); }
+}
+
+@keyframes ca-gallop-body {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes ca-gallop-a {
+  0%, 100% { transform: rotate(34deg); }
+  50% { transform: rotate(-30deg); }
+}
+
+@keyframes ca-gallop-b {
+  0%, 100% { transform: rotate(-30deg); }
+  50% { transform: rotate(34deg); }
+}
+
+@keyframes ca-wave {
+  from { transform: rotate(-12deg); }
+  to { transform: rotate(16deg); }
+}
+
+@keyframes ca-sparkle {
+  0%, 100% { opacity: 0; scale: 0.3; }
+  40% { opacity: 1; scale: 1; }
+}
+
+@keyframes ca-pulse {
+  from { opacity: 0.75; scale: 0.94; }
+  to { opacity: 1; scale: 1.08; }
+}
+
+@keyframes ca-ground-glow {
+  from { opacity: 0.45; }
+  to { opacity: 1; }
+}
+
+@keyframes ca-flicker {
+  0%, 100% { opacity: 1; }
+  18% { opacity: 0.9; }
+  23% { opacity: 0.98; }
+  47% { opacity: 0.86; }
+  52% { opacity: 0.97; }
+  78% { opacity: 0.92; }
+}
+
+@keyframes ca-smoke {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.45); }
+  12% { opacity: 0.6; }
+  55% { opacity: 0.32; }
+  100% { opacity: 0; transform: translate(46px, -120px) scale(2.9); }
+}
+
+@keyframes ca-twinkle {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.45; }
+  60% { opacity: 0.9; }
+}
+
+@keyframes ca-sway {
+  0%, 100% { transform: rotate(-1.6deg) scaleY(1); }
+  25% { transform: rotate(0deg) scaleY(0.975); }
+  50% { transform: rotate(1.6deg) scaleY(1); }
+  75% { transform: rotate(0deg) scaleY(0.975); }
+}
+
+@keyframes ca-nod {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes ca-arm {
+  from { transform: rotate(-10deg); }
+  to { transform: rotate(18deg); }
+}
+
+@keyframes ca-scarf {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(9deg); }
+}
+
+@keyframes ca-jump {
+  0%, 100% { transform: translateY(0) scale(1.06, 0.92); }
+  50% { transform: translateY(-9%) scale(0.97, 1.04); }
+}
+
+@keyframes ca-jump-shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.4; }
+  50% { transform: scaleX(0.78); opacity: 0.22; }
+}
+
+@keyframes ca-rise {
+  from { opacity: 0; transform: translateY(calc(var(--ca-u) * 1.5)); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes ca-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- paused (off screen, hidden tab or speed 0) ---------- */
+
+.ca--paused,
+.ca--paused * {
+  animation-play-state: paused !important;
+}
+
+/* ---------- reduced motion: a calm, still scene ---------- */
+
+.ca--reduced *,
+.ca--reduced *::before {
+  animation: none !important;
+}
+
+.ca--reduced .ca-santa-track {
+  left: auto;
+  right: 26%;
+  width: auto;
+}
+
+.ca--reduced .ca-smoke-puff:nth-child(odd) {
+  opacity: 0.35;
+  transform: translate(14px, -38px) scale(1.4);
+}
+
+.ca--reduced .ca-smoke-puff:nth-child(3) {
+  transform: translate(30px, -78px) scale(2.1);
+  opacity: 0.2;
+}
+
+.ca--reduced .ca-bubble {
+  transform: none;
+  transition: opacity 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ca *,
+  .ca *::before {
+    animation: none !important;
+  }
+
+  .ca-santa-track {
+    left: auto;
+    right: 26%;
+    width: auto;
+  }
+
+  .ca-bubble {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
+}
