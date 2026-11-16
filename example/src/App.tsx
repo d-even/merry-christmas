@@ -31,7 +31,7 @@ export function App() {
   const [speed, setSpeed] = useState(1);
   const [intensity, setIntensity] = useState(1);
   const [background, setBackground] = useState<ChristmasAuroraBackground>(
-    (params.get('background') as ChristmasAuroraBackground) ?? 'night',
+    (params.get('background') as ChristmasAuroraBackground) ?? 'dusk',
   );
   const [message, setMessage] = useState('May your days be filled with warmth, joy and new beginnings.');
   const [open, setOpen] = useState(true);

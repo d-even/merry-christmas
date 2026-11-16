@@ -87,7 +87,7 @@ describe('ChristmasAurora', () => {
       expect(container.querySelector(selector), selector).not.toBeNull();
     }
     const root = container.firstElementChild as HTMLElement;
-    expect(root.className).toContain('ca--night');
+    expect(root.className).toContain('ca--dusk');
     expect(root.className).toContain('ca--fullscreen');
   });
 
@@ -139,26 +139,24 @@ describe('ChristmasAurora', () => {
     expect(raf).not.toHaveBeenCalled();
   });
 
-  it('shows speech bubbles occasionally, then hides them again', () => {
+  it('shows a speech bubble only while the cursor is over the character', () => {
     vi.useFakeTimers();
     const { container } = render(<ChristmasAurora />);
-    const bubble = container.querySelector('.ca-bubble--snowman') as HTMLElement;
-    expect(bubble.textContent).toContain('Weeeeeeeeee!');
-    expect(bubble.className).not.toContain('ca-bubble--visible');
-    act(() => void vi.advanceTimersByTime(2700));
-    expect(bubble.className).toContain('ca-bubble--visible');
-    act(() => void vi.advanceTimersByTime(3900));
-    expect(bubble.className).not.toContain('ca-bubble--visible');
-
-    const track = container.querySelector('.ca-santa-track') as HTMLElement;
-    const santaBubble = container.querySelector('.ca-bubble--santa') as HTMLElement;
-    expect(santaBubble.textContent).toContain('Hahaha! Merry Christmas!');
-    // jsdom has no AnimationEvent, so React listens for the prefixed event name there.
-    act(() => void track.dispatchEvent(new Event('webkitAnimationStart', { bubbles: true })));
-    act(() => void vi.advanceTimersByTime(34000 * 0.3));
-    expect(santaBubble.className).toContain('ca-bubble--visible');
-    act(() => void vi.advanceTimersByTime(34000 * 0.2));
-    expect(santaBubble.className).not.toContain('ca-bubble--visible');
+    for (const [name, text] of [
+      ['snowman', 'Weeeeeeeeee!'],
+      ['santa', 'Hahaha! Merry Christmas!'],
+    ]) {
+      const character = container.querySelector(`.ca-${name}`) as HTMLElement;
+      const bubble = container.querySelector(`.ca-bubble--${name}`) as HTMLElement;
+      expect(bubble.textContent).toContain(text);
+      // never on its own, however long the scene runs
+      act(() => void vi.advanceTimersByTime(60000));
+      expect(bubble.className).not.toContain('ca-bubble--visible');
+      fireEvent.mouseEnter(character);
+      expect(bubble.className).toContain('ca-bubble--visible');
+      fireEvent.mouseLeave(character);
+      expect(bubble.className).not.toContain('ca-bubble--visible');
+    }
   });
 
   it('never creates audio until the visitor presses the sound toggle', () => {
@@ -203,7 +201,6 @@ describe('ChristmasAurora', () => {
 
     const { unmount } = render(<ChristmasAurora />);
     expect(pending.size).toBeGreaterThan(0);
-    const whileMounted = vi.getTimerCount();
     unmount();
 
     expect(pending.size).toBe(0);
@@ -211,7 +208,6 @@ describe('ChristmasAurora', () => {
     const control = render(<div />);
     control.unmount();
     const reactOnly = vi.getTimerCount();
-    expect(whileMounted).toBeGreaterThan(reactOnly);
     vi.clearAllTimers();
     const again = render(<ChristmasAurora />);
     again.unmount();

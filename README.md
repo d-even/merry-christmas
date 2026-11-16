@@ -1,11 +1,11 @@
 # christmas-aurora
 
-A magical animated Christmas scene for React. One component gives you waving northern lights, drifting snow, moonlit mountains, a cosy log hut with a smoking chimney, a snow-covered Christmas tree, a bouncing snowman and Santa flying across the sky.
+A magical animated Christmas scene for React. One component gives you waving northern lights, drifting snow, moonlit mountains, a cosy log hut with a smoking chimney, a snow-covered Christmas tree, a snowman and Santa's sleigh flying across the sky. Move the cursor over the snowman or Santa and they call out a greeting.
 
 ![christmas-aurora demo](./docs/demo.gif)
 
 - **One import, no setup.** Styles are bundled with the component; there is no CSS file to import.
-- **Lightweight.** About 18 kB gzipped, with no dependencies beyond React.
+- **Self-contained.** No dependencies beyond React and nothing to host: the illustrations are embedded in the bundle (about 390 kB gzipped).
 - **Smooth.** Canvas for the aurora and snow, SVG and CSS transforms for everything else. Animation stops when the scene is off screen or the tab is hidden.
 - **Considerate.** Respects `prefers-reduced-motion`, never autoplays audio, and cleans up every loop, timer and listener on unmount.
 - **Typed.** Written in TypeScript, ships ESM and CommonJS builds, and works with server rendering.
@@ -30,7 +30,7 @@ function App() {
       aurora={true}
       santa={true}
       snowman={true}
-      background="night"
+      background="dusk"
     />
   );
 }
@@ -66,7 +66,7 @@ Set `fullScreen={false}` and the scene fills its parent instead. The parent need
 
 The artwork scales to any shape, from a phone screen to a wide banner.
 
-![Night theme](./docs/preview.jpg)
+![Dusk theme](./docs/preview.jpg)
 
 ## Props
 
@@ -83,7 +83,7 @@ The artwork scales to any shape, from a phone screen to a wide banner.
 | `intensity` | `number` | `1` | Snowfall density multiplier, from `0` to `4`. |
 | `title` | `string \| false` | `"Merry Christmas"` | The large headline. `false` hides it. |
 | `message` | `string \| false` | `"May your days be filled with warmth, joy and new beginnings."` | The greeting under the headline. `false` hides it. |
-| `background` | `"night" \| "midnight" \| "dusk"` | `"night"` | Sky colour theme. |
+| `background` | `"night" \| "midnight" \| "dusk"` | `"dusk"` | Sky colour theme. |
 | `fullScreen` | `boolean` | `true` | `true` pins the scene to the viewport; `false` fills the parent element. |
 | `className` | `string` | – | Extra class names for the root element. |
 | `style` | `CSSProperties` | – | Inline styles for the root element. |
@@ -131,7 +131,7 @@ The package does not load any web fonts. The headline looks best in a script fac
 
 ### Sound
 
-`sound` is off by default. When you turn it on, a small speaker button appears in the corner of the scene, and audio starts only when the visitor presses it: soft wind, sleigh bells as Santa calls out, and a "wee!" from the snowman. All sounds are synthesised with the Web Audio API, so no audio files are downloaded.
+`sound` is off by default. When you turn it on, a small speaker button appears in the corner of the scene, and audio starts only when the visitor presses it: soft wind, sleigh bells and a "wee!" when the visitor hovers over Santa or the snowman. All sounds are synthesised with the Web Audio API, so no audio files are downloaded.
 
 ```tsx
 <ChristmasAurora sound />

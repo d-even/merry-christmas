@@ -8,6 +8,7 @@ import { Aurora } from './Aurora';
 import { ChristmasTree } from './ChristmasTree';
 import { Greeting } from './Greeting';
 import { Hut } from './Hut';
+import { Moon } from './Moon';
 import { FramingPines, Ground, Mountains } from './Landscape';
 import { Santa } from './Santa';
 import { Snowfall } from './Snowfall';
@@ -86,7 +87,7 @@ export const ChristmasAurora = forwardRef<HTMLDivElement, ChristmasAuroraProps>(
       intensity = 1,
       title = 'Merry Christmas',
       message = DEFAULT_MESSAGE,
-      background = 'night',
+      background = 'dusk',
       fullScreen = true,
       className,
       style,
@@ -135,16 +136,16 @@ export const ChristmasAurora = forwardRef<HTMLDivElement, ChristmasAuroraProps>(
         <div className="ca-scene" aria-hidden="true">
           <Stars />
           {aurora ? <Aurora running={running} speed={safeSpeed} /> : null}
-          <div className="ca-moon" />
+          <Moon />
           {santa ? (
-            <Santa active={active} speed={safeSpeed} reducedMotion={reducedMotion} onSpeak={audio.jingle} />
+            <Santa active={active} speed={safeSpeed} onSpeak={audio.jingle} />
           ) : null}
           <Mountains />
           <Ground auroraGlow={aurora} />
           <FramingPines />
           {hut ? <Hut /> : null}
           {christmasTree ? <ChristmasTree /> : null}
-          {snowman ? <Snowman active={active} speed={safeSpeed} onSpeak={audio.wee} /> : null}
+          {snowman ? <Snowman active={active} onSpeak={audio.wee} /> : null}
           {snowfall && snowAmount > 0 ? (
             <Snowfall running={running} speed={safeSpeed} intensity={snowAmount} />
           ) : null}

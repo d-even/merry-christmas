@@ -31,7 +31,7 @@ export interface ChristmasAuroraProps
   title?: string | false;
   /** Greeting shown under the headline. Pass `false` or an empty string to hide it. */
   message?: string | false;
-  /** Sky colour theme. @default "night" */
+  /** Sky colour theme. @default "dusk" */
   background?: ChristmasAuroraBackground;
   /**
    * `true` pins the scene to the viewport as a fixed background.

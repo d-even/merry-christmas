@@ -1,10 +1,11 @@
-import { Pine } from './Pine';
+import treeUrl from '../assets/images/tree.webp';
 
-/** A natural, snow-covered pine with a modest string of lights. */
+/** The snow-covered Christmas tree with warm fairy lights and a glowing star. */
 export function ChristmasTree() {
   return (
     <div className="ca-tree">
-      <Pine decorated />
+      <img className="ca-art ca-tree-art" src={treeUrl} alt="" draggable={false} />
+      <div className="ca-tree-star" />
     </div>
   );
 }

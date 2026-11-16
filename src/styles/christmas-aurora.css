@@ -105,23 +105,19 @@
   opacity: 0.95;
 }
 
+.ca-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-user-drag: none;
+}
+
 .ca-moon {
   position: absolute;
-  top: 9%;
-  right: 11%;
-  width: calc(var(--ca-u) * 9.5);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 66% 30%, rgba(196, 180, 128, 0.5) 0 9%, transparent 10%),
-    radial-gradient(circle at 34% 60%, rgba(196, 180, 128, 0.42) 0 13%, transparent 14%),
-    radial-gradient(circle at 62% 72%, rgba(196, 180, 128, 0.36) 0 7%, transparent 8%),
-    radial-gradient(circle at 40% 28%, rgba(196, 180, 128, 0.3) 0 5%, transparent 6%),
-    radial-gradient(circle at 38% 34%, #fffef4 0%, #fbf3d2 46%, #ecdfae 78%, #d9c98f 100%);
-  box-shadow:
-    0 0 calc(var(--ca-u) * 1.5) calc(var(--ca-u) * 0.3) rgba(255, 246, 205, 0.55),
-    0 0 calc(var(--ca-u) * 6) calc(var(--ca-u) * 2) rgba(255, 238, 185, 0.22),
-    0 0 calc(var(--ca-u) * 16) calc(var(--ca-u) * 6) rgba(190, 180, 255, 0.12);
+  top: 5%;
+  right: 6%;
+  width: calc(var(--ca-u) * 17);
+  filter: drop-shadow(0 0 calc(var(--ca-u) * 2.4) rgba(255, 226, 160, 0.4));
   animation: ca-moon-glow calc(7s / var(--ca-speed)) ease-in-out infinite alternate;
 }
 
@@ -129,8 +125,10 @@
 
 .ca-santa-track {
   position: absolute;
-  top: 11%;
-  left: 100%;
+  top: 12%;
+  right: 100%;
+  display: flex;
+  justify-content: flex-end;
   width: calc(100% + var(--ca-u) * 30);
   animation: ca-fly 34s linear infinite;
   will-change: transform;
@@ -143,46 +141,22 @@
 
 .ca-santa {
   position: relative;
+  pointer-events: auto;
   animation: ca-bob calc(3.2s / var(--ca-speed)) ease-in-out infinite alternate;
 }
 
-.ca-santa-svg {
-  filter: drop-shadow(0 0 calc(var(--ca-u) * 0.5) rgba(255, 233, 168, 0.35));
+.ca-santa-sprite {
+  aspect-ratio: 594 / 214;
+  overflow: hidden;
+  filter: drop-shadow(0 0 calc(var(--ca-u) * 0.45) rgba(255, 226, 170, 0.55));
 }
 
-.ca-reindeer {
-  animation: ca-gallop-body calc(0.72s / var(--ca-speed)) ease-in-out infinite;
-}
-
-.ca-leg {
-  fill: none;
-  stroke: #6f452b;
-  stroke-width: 3.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transform-origin: 0 0;
-  animation: ca-gallop-a calc(0.72s / var(--ca-speed)) ease-in-out infinite;
-}
-
-.ca-leg--b {
-  animation-name: ca-gallop-b;
-}
-
-.ca-rudolph-glow {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: ca-pulse calc(1.4s / var(--ca-speed)) ease-in-out infinite alternate;
-}
-
-.ca-santa-wave {
-  transform-origin: 434px 74px;
-  animation: ca-wave calc(0.9s / var(--ca-speed)) ease-in-out infinite alternate;
-}
-
-.ca-dust-spark {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: ca-sparkle calc(1.6s / var(--ca-speed)) ease-in-out infinite;
+.ca-santa-sprite img {
+  display: block;
+  width: 900%;
+  max-width: none;
+  height: 100%;
+  animation: ca-gallop calc(1.35s / var(--ca-speed)) steps(9) infinite;
 }
 
 /* ---------- landscape ---------- */
@@ -254,26 +228,33 @@
 }
 
 .ca-hut {
-  left: 37%;
-  bottom: calc(var(--ca-u) * 7.6);
-  width: calc(var(--ca-u) * 25);
+  left: 40%;
+  bottom: calc(var(--ca-u) * 7.2);
+  width: calc(var(--ca-u) * 30);
 }
 
-.ca-window-light {
-  animation: ca-flicker calc(4.6s / var(--ca-speed)) ease-in-out infinite;
-}
-
-.ca-window-glow {
-  animation: ca-flicker calc(4.6s / var(--ca-speed)) ease-in-out infinite;
+.ca-hut-glow {
+  position: absolute;
+  left: 18%;
+  top: 38%;
+  width: 62%;
+  height: 56%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 190, 90, 0.34), rgba(255, 170, 70, 0));
   mix-blend-mode: screen;
+  animation: ca-flicker calc(4.6s / var(--ca-speed)) ease-in-out infinite;
 }
 
-.ca-smoke {
-  filter: blur(2.5px);
+.ca-scene svg.ca-smoke {
+  position: absolute;
+  left: 20.5%;
+  bottom: 96%;
+  width: 22%;
+  filter: blur(calc(var(--ca-u) * 0.14));
 }
 
 .ca-smoke-puff {
-  fill: #cfd3ef;
+  fill: #e3ddf2;
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
@@ -281,72 +262,44 @@
 }
 
 .ca-tree {
-  left: 60%;
-  bottom: calc(var(--ca-u) * 6.6);
-  width: calc(var(--ca-u) * 15.5);
+  left: 64%;
+  bottom: calc(var(--ca-u) * 5.4);
+  width: calc(var(--ca-u) * 17);
 }
 
-.ca-twinkle circle:first-child {
-  mix-blend-mode: screen;
-}
-
-.ca-twinkle {
-  animation: ca-twinkle calc(3.4s / var(--ca-speed)) ease-in-out infinite;
+.ca-tree-art {
+  animation: ca-tree-lights calc(2.6s / var(--ca-speed)) ease-in-out infinite alternate;
 }
 
 .ca-tree-star {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: ca-pulse calc(2.8s / var(--ca-speed)) ease-in-out infinite alternate;
-}
-
-.ca-tree-halo {
+  position: absolute;
+  left: 50%;
+  top: 6.5%;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 224, 130, 0.6), rgba(255, 210, 110, 0));
   mix-blend-mode: screen;
+  translate: -50% -50%;
+  animation: ca-pulse calc(2.8s / var(--ca-speed)) ease-in-out infinite alternate;
 }
 
 /* ---------- snowman ---------- */
 
 .ca-snowman {
-  left: 80%;
-  bottom: calc(var(--ca-u) * 4.2);
-  width: calc(var(--ca-u) * 10.5);
+  left: 84%;
+  bottom: calc(var(--ca-u) * 2.6);
+  width: calc(var(--ca-u) * 14);
+  pointer-events: auto;
 }
 
-.ca-snowman-body {
-  transform-origin: 80px 208px;
+.ca-snowman-art {
+  transform-origin: 50% 96%;
   animation: ca-sway calc(3.6s / var(--ca-speed)) ease-in-out infinite;
 }
 
-.ca-snowman-head {
-  transform-origin: 80px 78px;
-  animation: ca-nod calc(3.6s / var(--ca-speed)) ease-in-out infinite;
-}
-
-.ca-snowman-arm {
-  transform-origin: 106px 100px;
-  animation: ca-arm calc(1.8s / var(--ca-speed)) ease-in-out infinite alternate;
-}
-
-.ca-snowman-scarf {
-  transform-origin: 90px 84px;
-  animation: ca-scarf calc(2.4s / var(--ca-speed)) ease-in-out infinite alternate;
-}
-
-.ca-snowman-shadow {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.ca-snowman--excited .ca-snowman-body {
+.ca-snowman--excited .ca-snowman-art {
   animation: ca-jump calc(0.62s / var(--ca-speed)) cubic-bezier(0.3, 0, 0.4, 1) infinite;
-}
-
-.ca-snowman--excited .ca-snowman-shadow {
-  animation: ca-jump-shadow calc(0.62s / var(--ca-speed)) cubic-bezier(0.3, 0, 0.4, 1) infinite;
-}
-
-.ca-snowman--excited .ca-snowman-arm {
-  animation-duration: calc(0.31s / var(--ca-speed));
 }
 
 /* ---------- speech bubbles ---------- */
@@ -384,8 +337,8 @@
 }
 
 .ca-bubble--snowman {
-  right: 62%;
-  bottom: 84%;
+  right: 58%;
+  bottom: 88%;
   transform-origin: 100% 100%;
 }
 
@@ -395,8 +348,8 @@
 }
 
 .ca-bubble--santa {
-  left: 58%;
-  top: 92%;
+  left: 8%;
+  top: 96%;
   transform-origin: 20% 0%;
 }
 
@@ -565,18 +518,18 @@
   to { filter: brightness(1.08); }
 }
 
-/* The track is one container-width plus one Santa wide, so -100% carries him fully across. */
+/* The track is one container-width plus one Santa wide, so 100% carries him fully across. */
 @keyframes ca-fly {
   0% { transform: translateX(0); }
-  70%, 100% { transform: translateX(-100%); }
+  70%, 100% { transform: translateX(100%); }
 }
 
-/* He swoops in low on the right, then climbs away over the top-left corner. */
+/* He swoops in low on the left, then climbs away over the top-right corner. */
 @keyframes ca-arc {
-  0% { transform: translateY(calc(var(--ca-u) * 5)) rotate(-5deg); }
-  22% { transform: translateY(calc(var(--ca-u) * 0.6)) rotate(-1deg); }
-  40% { transform: translateY(calc(var(--ca-u) * -1)) rotate(3deg); }
-  70%, 100% { transform: translateY(calc(var(--ca-u) * -13)) rotate(11deg); }
+  0% { transform: translateY(calc(var(--ca-u) * 5)) rotate(5deg); }
+  22% { transform: translateY(calc(var(--ca-u) * 0.6)) rotate(1deg); }
+  40% { transform: translateY(calc(var(--ca-u) * -1)) rotate(-3deg); }
+  70%, 100% { transform: translateY(calc(var(--ca-u) * -13)) rotate(-11deg); }
 }
 
 @keyframes ca-bob {
@@ -584,29 +537,13 @@
   to { transform: translateY(calc(var(--ca-u) * 0.45)) rotate(0.8deg); }
 }
 
-@keyframes ca-gallop-body {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+@keyframes ca-gallop {
+  to { transform: translateX(-100%); }
 }
 
-@keyframes ca-gallop-a {
-  0%, 100% { transform: rotate(34deg); }
-  50% { transform: rotate(-30deg); }
-}
-
-@keyframes ca-gallop-b {
-  0%, 100% { transform: rotate(-30deg); }
-  50% { transform: rotate(34deg); }
-}
-
-@keyframes ca-wave {
-  from { transform: rotate(-12deg); }
-  to { transform: rotate(16deg); }
-}
-
-@keyframes ca-sparkle {
-  0%, 100% { opacity: 0; scale: 0.3; }
-  40% { opacity: 1; scale: 1; }
+@keyframes ca-tree-lights {
+  from { filter: brightness(0.97); }
+  to { filter: brightness(1.1) saturate(1.08); }
 }
 
 @keyframes ca-pulse {
@@ -632,7 +569,7 @@
   0% { opacity: 0; transform: translate(0, 0) scale(0.45); }
   12% { opacity: 0.6; }
   55% { opacity: 0.32; }
-  100% { opacity: 0; transform: translate(46px, -120px) scale(2.9); }
+  100% { opacity: 0; transform: translate(46px, -96px) scale(2.6); }
 }
 
 @keyframes ca-twinkle {
@@ -642,35 +579,16 @@
 }
 
 @keyframes ca-sway {
-  0%, 100% { transform: rotate(-1.6deg) scaleY(1); }
-  25% { transform: rotate(0deg) scaleY(0.975); }
-  50% { transform: rotate(1.6deg) scaleY(1); }
-  75% { transform: rotate(0deg) scaleY(0.975); }
+  0%, 100% { transform: rotate(-1.4deg) scaleY(1); }
+  25% { transform: rotate(0deg) scaleY(0.98); }
+  50% { transform: rotate(1.4deg) scaleY(1); }
+  75% { transform: rotate(0deg) scaleY(0.98); }
 }
 
-@keyframes ca-nod {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-
-@keyframes ca-arm {
-  from { transform: rotate(-10deg); }
-  to { transform: rotate(18deg); }
-}
-
-@keyframes ca-scarf {
-  from { transform: rotate(-6deg); }
-  to { transform: rotate(9deg); }
-}
-
+/* A squash-and-stretch bounce that keeps his snowdrift on the ground. */
 @keyframes ca-jump {
-  0%, 100% { transform: translateY(0) scale(1.06, 0.92); }
-  50% { transform: translateY(-9%) scale(0.97, 1.04); }
-}
-
-@keyframes ca-jump-shadow {
-  0%, 100% { transform: scaleX(1); opacity: 0.4; }
-  50% { transform: scaleX(0.78); opacity: 0.22; }
+  0%, 100% { transform: scale(1.05, 0.93); }
+  50% { transform: scale(0.96, 1.07); }
 }
 
 @keyframes ca-rise {
@@ -697,8 +615,7 @@
 }
 
 .ca--reduced .ca-santa-track {
-  left: auto;
-  right: 26%;
+  right: 30%;
   width: auto;
 }
 
@@ -724,8 +641,7 @@
   }
 
   .ca-santa-track {
-    left: auto;
-    right: 26%;
+    right: 30%;
     width: auto;
   }
 
