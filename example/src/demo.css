@@ -1,0 +1,98 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #060a22;
+}
+
+.panel {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(10, 14, 56, 0.72);
+  color: #eef1ff;
+  font: 13px/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  backdrop-filter: blur(12px);
+}
+
+.panel--closed {
+  width: auto;
+}
+
+.panel__handle {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.panel__body {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+
+.panel h1 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+
+.panel__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+}
+
+.panel label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel__row {
+  flex-direction: column;
+  align-items: stretch !important;
+  gap: 4px !important;
+}
+
+.panel__row span {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.85;
+}
+
+.panel input[type='range'] {
+  width: 100%;
+  accent-color: #7fe8b6;
+}
+
+.panel input[type='checkbox'] {
+  accent-color: #7fe8b6;
+}
+
+.panel select,
+.panel textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+  resize: vertical;
+}
+
+.panel select option {
+  color: #111;
+}
